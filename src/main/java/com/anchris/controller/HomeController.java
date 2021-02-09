@@ -61,12 +61,11 @@ public class HomeController {
                 map.put("post", post);
                 User user = userService.findUserById(post.getUserId());
                 map.put("user", user);
-
                 discussPosts.add(map);
             }
         }
         model.addAttribute("discussPosts", discussPosts);
-        System.err.println("current = "+page.getCurrent());
+//        System.err.println("current = "+page.getCurrent());
         return "/index";
     }
 
