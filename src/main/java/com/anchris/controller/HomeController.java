@@ -65,10 +65,6 @@ public class HomeController {
             }
         }
         model.addAttribute("discussPosts", discussPosts);
-//        System.err.println("current = "+page.getCurrent());
         return "/index";
     }
-
-
-
 }

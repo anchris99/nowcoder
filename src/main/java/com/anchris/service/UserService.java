@@ -133,6 +133,7 @@ public class UserService  implements CommunityConstant {
         }
         // 验证密码
         password = CommunityUtil.md5(password + user.getSalt());
+        System.err.println("password="+password);
         if (!user.getPassword().equals(password)) {
             map.put("passwordMsg", "密码不正确!");
             return map;
@@ -151,5 +152,46 @@ public class UserService  implements CommunityConstant {
 
     public void logout(String ticket) {
         loginTicketMapper.updateStatus(ticket, 1);
+    }
+
+    public LoginTicket findLoginTicket(String ticket){
+        return loginTicketMapper.selectByTicket(ticket);
+    }
+
+    public int updateHeader(int userId,String headerUrl){
+        return userMapper.updateHeader(userId,headerUrl);
+    }
+
+
+    public User findUserByName(String name){
+        return userMapper.selectByName(name);
+    }
+
+
+    public User getUserById(int id){
+        return userMapper.selectById(id);
+    }
+    public Map<String ,String> updatePassword(int userId,String oldPassword,String newPassword,String confirmPassword,String salt){
+        HashMap<String, String> map = new HashMap<>();
+
+        if(oldPassword!=null){
+            oldPassword = CommunityUtil.md5(oldPassword+salt);
+            if(!oldPassword.equals(userMapper.selectById(userId).getPassword())){
+                map.put("oldPwdMsg","密码错误");
+                return map;
+            }
+        }
+        if(newPassword==null||newPassword.length()<8){
+            map.put("newPwdMsg","密码长度不能低于8位");
+            return map;
+        }
+        if(confirmPassword==null||!confirmPassword.equals(newPassword)){
+            map.put("confirmPwdMsg","两次密码不一致");
+            return map;
+        }
+
+        newPassword = CommunityUtil.md5(newPassword+salt);
+        userMapper.updatePassword(userId,newPassword);
+        return map;
     }
 }
