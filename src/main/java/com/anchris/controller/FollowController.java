@@ -1,8 +1,10 @@
 package com.anchris.controller;
 
 import com.anchris.annotation.LoginRequired;
+import com.anchris.entity.Event;
 import com.anchris.entity.Page;
 import com.anchris.entity.User;
+import com.anchris.event.EventProducer;
 import com.anchris.service.FollowService;
 import com.anchris.service.UserService;
 import com.anchris.util.CommunityConstant;
@@ -20,7 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-public class FollowController {
+public class FollowController  implements CommunityConstant{
     @Autowired
     private FollowService followService;
 
@@ -30,6 +32,9 @@ public class FollowController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private EventProducer eventProducer;
+
     @LoginRequired
     @RequestMapping(path = "/follow", method = RequestMethod.POST)
     @ResponseBody
@@ -37,7 +42,14 @@ public class FollowController {
         User user = hostHolder.getUser();
 
         followService.follow(user.getId(), entityType, entityId);
-
+        // 触发关注事件
+        Event event = new Event()
+                .setTopic(TOPIC_FOLLOW)
+                .setUserId(hostHolder.getUser().getId())
+                .setEntityType(entityType)
+                .setEntityId(entityId)
+                .setEntityUserId(entityId);
+        eventProducer.fireEvent(event);
         return CommunityUtil.getJSONString(0, "已关注!");
     }
 

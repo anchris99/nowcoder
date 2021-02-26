@@ -6,8 +6,10 @@ import com.anchris.entity.Page;
 import com.anchris.entity.User;
 import com.anchris.service.DiscussPostService;
 import com.anchris.service.LikeService;
+import com.anchris.service.MessageService;
 import com.anchris.service.UserService;
 import com.anchris.util.CommunityConstant;
+import com.anchris.util.HostHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Controller;
@@ -32,6 +34,12 @@ public class HomeController implements CommunityConstant {
 
     @Autowired
     private LikeService likeService;
+
+    @Autowired
+    private MessageService messageService;
+
+    @Autowired
+    private HostHolder hostHolder;
 
 /*    @RequestMapping(path = "/index", method = RequestMethod.GET)
     public String getIndexPage(Model model, Page page) {
@@ -72,6 +80,11 @@ public class HomeController implements CommunityConstant {
                 discussPosts.add(map);
             }
         }
+        //查询总的未读消息数量
+        User user = hostHolder.getUser();
+        int letterUnreadCount = messageService.findLetterUnreadCount(user.getId(),null);
+        int noticeUnreadCount = messageService.findNoticeUnreadCount(user.getId(), null);
+        model.addAttribute("unreadCountTotal", letterUnreadCount+noticeUnreadCount);
         model.addAttribute("discussPosts", discussPosts);
         return "/index";
     }
