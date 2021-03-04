@@ -13,15 +13,15 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Autowired
     private LoginTicketInterceptor loginTicketInterceptor;
 
-    @Autowired
-    private LoginRequiredInterceptor loginRequiredInterceptor;
+//    @Autowired
+//    private LoginRequiredInterceptor loginRequiredInterceptor;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(loginTicketInterceptor)
                 .excludePathPatterns("/js/*.js","/img/*.png","/img/*.jpg","/img/*.jpeg","/css/*.css");
-        registry.addInterceptor(loginRequiredInterceptor)
-                .excludePathPatterns("/js/*.js","/img/*.png","/img/*.jpg","/img/*.jpeg","/css/*.css");
+//        registry.addInterceptor(loginRequiredInterceptor)
+//                .excludePathPatterns("/js/*.js","/img/*.png","/img/*.jpg","/img/*.jpeg","/css/*.css");
 
     }
 }

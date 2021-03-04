@@ -68,4 +68,41 @@ public interface CommunityConstant {
      * */
     int SYSTEM_USER_ID=1;
 
+    /**
+     * ES 文章索引*/
+    String ES_POST_INDEX = "community_index";
+
+
+    /**
+     * ES 测试索引*/
+    String ES_TEST_INDEX = "test_index";
+
+
+    String ES_POST_INDEX_IK = "community_ik";
+
+    /**
+     * 发帖事件
+     */
+
+    String TOPIC_PUBLISH="publish";
+    /**
+     * 主题: 删帖
+     */
+    String TOPIC_DELETE = "delete";
+
+
+    /**
+     * 权限: 普通用户
+     */
+    String AUTHORITY_USER = "user";
+
+    /**
+     * 权限: 管理员
+     */
+    String AUTHORITY_ADMIN = "admin";
+
+    /**
+     * 权限: 版主
+     */
+    String AUTHORITY_MODERATOR = "moderator";
 }

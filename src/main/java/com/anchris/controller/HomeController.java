@@ -82,9 +82,11 @@ public class HomeController implements CommunityConstant {
         }
         //查询总的未读消息数量
         User user = hostHolder.getUser();
+        if(user!=null){
         int letterUnreadCount = messageService.findLetterUnreadCount(user.getId(),null);
         int noticeUnreadCount = messageService.findNoticeUnreadCount(user.getId(), null);
         model.addAttribute("unreadCountTotal", letterUnreadCount+noticeUnreadCount);
+        }
         model.addAttribute("discussPosts", discussPosts);
         return "/index";
     }
@@ -93,5 +95,11 @@ public class HomeController implements CommunityConstant {
     @RequestMapping(path = "/error" ,method = RequestMethod.GET)
     public String getError(){
         return "/error/500";
+    }
+
+
+    @RequestMapping(path = "/denied", method = RequestMethod.GET)
+    public String getDeniedPage() {
+        return "/error/404";
     }
 }

@@ -22,4 +22,10 @@ public interface DiscussPostMapper {
 
     int updateCommentCount(int id,int commentCount);
 
+    List<DiscussPost> selectAllPosts();
+
+    int updateStatus(int id,int status);
+
+    int updateType(int id,int type);
+
 }
