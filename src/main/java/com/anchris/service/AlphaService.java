@@ -7,6 +7,8 @@ import com.anchris.entity.DiscussPost;
 import com.anchris.entity.User;
 import com.anchris.util.CommunityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
@@ -86,6 +88,17 @@ public class AlphaService {
                 return "ok";
             }
         });
+    }
+
+
+    @Async
+    public void threadPoolExecute(){
+        System.err.println("spring thread pool ");
+    }
+
+//    @Scheduled(initialDelay = 10000, fixedRate = 1000)
+    public void execute2() {
+        System.err.println("execute2");
     }
 
 }

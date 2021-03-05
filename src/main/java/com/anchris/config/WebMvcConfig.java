@@ -1,5 +1,6 @@
 package com.anchris.config;
 
+import com.anchris.controller.interceptor.DataInterceptor;
 import com.anchris.controller.interceptor.LoginRequiredInterceptor;
 import com.anchris.controller.interceptor.LoginTicketInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,9 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Autowired
     private LoginTicketInterceptor loginTicketInterceptor;
 
+    @Autowired
+    private DataInterceptor dataInterceptor;
+
 //    @Autowired
 //    private LoginRequiredInterceptor loginRequiredInterceptor;
 
@@ -20,8 +24,10 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(loginTicketInterceptor)
                 .excludePathPatterns("/js/*.js","/img/*.png","/img/*.jpg","/img/*.jpeg","/css/*.css");
-//        registry.addInterceptor(loginRequiredInterceptor)
-//                .excludePathPatterns("/js/*.js","/img/*.png","/img/*.jpg","/img/*.jpeg","/css/*.css");
+
+
+        registry.addInterceptor(dataInterceptor)
+                .excludePathPatterns("/js/*.js","/img/*.png","/img/*.jpg","/img/*.jpeg","/css/*.css");
 
     }
 }
